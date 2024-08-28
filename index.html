@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loja de Doces</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #000000;
+            color: #fff;
+            padding: 1rem;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        .item {
+            background: #fff;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .item img {
+            max-width: 20%;
+            border-radius: 8px;
+            bottom: 0;
+        }
+        .item h2 {
+            margin: 0;
+            color: #333;
+        }
+        .item p {
+            color: #666;
+        }
+        .form-container {
+            margin-top: 2rem;
+            background: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        .form-container input, .form-container textarea {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .form-container button {
+            background-color: #000000;
+            border: none;
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        footer {
+            background-color: #ec1919;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            bottom: -100px;;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Loja de Doces</h1>
+            <div id="cartItems">Carrinho: 0 itens</div>
+        </div>
+    </header>
+
+    <div class="container">
+        <section>
+            <div class="item">
+                <h2>Brigadeiro</h2>
+                <img src="./img/349-scaled.jpg" alt="Brigadeiro">
+                <p>Delicioso brigadeiro feito com chocolate de alta qualidade.</p>
+                <p>Preço: R$ 10,00</p>
+                <p><button class="cartItems" data-item="Brigadeiro" data-price="10">Carrinho</button></p>
+            </div>
+            <div class="item">
+                <h2>Trufa</h2>
+                <img src="./img/Doces-do-Chefe-1200x806.jpg" alt="Trufa">
+                <p>Doce tradicional de trufa com uma textura suave e sabor irresistível.</p>
+                <p>Preço: R$ 5,00</p>
+                <p><button class="cartItems" data-item="Trufa" data-price="5">Carrinho</button></p>
+            </div>
+        </section>
+
+        <section class="form-container">
+            <h2> Contato</h2>
+            <form action="00001105568660sp@al.educacao.sp.gov.br" method="post" enctype="text/plain">
+                <label for="name">Nome:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Sala:</label>
+                <input type="number" id="number" name="text" required>
+
+                <label for="message">Mensagem:</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+
+                <button type="submit">Finalizar Compra</button>
+            </form>
+        </section>
+    </div>
+
+    <footer>
+        &copy; 2024 Loja de Doces
+    </footer>
+
+    <script>
+        // Inicializar o carrinho
+        let cart = [];
+        
+        // Atualiza o carrinho exibido no header
+        function updateCartDisplay() {
+            const cartItems = document.getElementById('cartItems');
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartItems.textContent = `Carrinho: ${totalItems} itens`;
+        }
+        
+        // Função para adicionar itens ao carrinho
+        function addToCart(itemName, itemPrice) {
+            const existingItem = cart.find(item => item.name === itemName);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ name: itemName, price: itemPrice, quantity: 1 });
+            }
+            updateCartDisplay();
+        }
+        
+        // Adiciona event listeners aos botões
+        document.querySelectorAll('.cartItems').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const itemName = event.target.getAttribute('data-item');
+                const itemPrice = parseFloat(event.target.getAttribute('data-price'));
+                addToCart(itemName, itemPrice);
+            });
+        });
+
+        // Atualiza o carrinho inicialmente
+        updateCartDisplay();
+    </script>
+</body>
+</html>
